@@ -3,7 +3,7 @@
 Testing and Exercises
 
 
-There are 8 basic data types in JavaScript.
+### There are 8 basic data types in JavaScript.
 
 * **number** for numbers of any kind: integer or floating-point, integers are limited by **±(253-1)**.
 * **bigint** is for integer numbers of arbitrary length.
@@ -20,11 +20,14 @@ The **typeof** operator allows us to see which type is stored in a variable.
 * Returns a string with the name of the type, like **"string"**.
 * For **null** returns **"object"** = this is an error in the language, it's not actually an object 
 
+### Simplest user interactors
 
 **alert**\
-shows a message.\
+shows a message.
+
 **prompt**\
-shows a message asking the user to input text. It returns the text or, if Cancel button or Esc is clicked, **null**.\
+shows a message asking the user to input text. It returns the text or, if Cancel button or Esc is clicked, **null**.
+
 **confirm**\
 shows a message and waits for the user to press “OK” or “Cancel”. It returns **true** for OK and **false** for Cancel/Esc.
 
