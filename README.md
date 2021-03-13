@@ -21,11 +21,11 @@ The **typeof** operator allows us to see which type is stored in a variable.
 * For **null** returns **"object"** = this is an error in the language, it's not actually an object 
 
 
-**alert**
-shows a message.
-**prompt**
-shows a message asking the user to input text. It returns the text or, if Cancel button or Esc is clicked, **null**.
-**confirm**
+**alert**\
+shows a message.\
+**prompt**\
+shows a message asking the user to input text. It returns the text or, if Cancel button or Esc is clicked, **null**.\
+**confirm**\
 shows a message and waits for the user to press “OK” or “Cancel”. It returns **true** for OK and **false** for Cancel/Esc.
 
 All these methods are modal: they pause script execution and don’t allow the visitor to interact with the rest of the page until the window has been dismissed.
