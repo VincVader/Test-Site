@@ -101,7 +101,7 @@ console.log(coo());
 console.log(coo());
 console.log(coo());
 
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('.numbers');
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].innerHTML = i;
@@ -164,3 +164,68 @@ let username = "John",
 
 console.log(admin);
 
+const promptButton = document.querySelector('.prompt-button')
+
+
+promptButton.addEventListener('click', (e) => {
+    let task9 = prompt("Who's there?", '');
+
+    if (task9 === null || +task9 === 0) {
+        alert('canceled');
+    } else if (task9.toLowerCase() === 'admin') {
+        let password = prompt('Password?');
+        let reply = (password === null || +password === 0) ? 'Canceled' :
+            password === 'TheMaster' ? 'Welcome!' :
+            'Wrong password'
+        alert(reply);
+    } else {
+        alert("I don't know you");
+    }
+});
+
+
+const arr = ['asfd', 'asd', 'dsa', '1nkil', 'asd', 'fhk', 'lfd', 'link', 'link1'];
+let arr1 = arr.map(item => {
+    item = item.split('').sort().join('');
+    return item;
+})
+const getFirstAnagram = (str) => {
+    str = str.split('').sort().join('');
+    let i = 0;
+    let anagram = [];
+    arr1.map((arrStr, index) => {
+        if (arrStr === str) {
+            anagram.push(arr[index]);
+            i++;
+        }
+    })
+    return i >= 2 ? anagram[0] : null;
+}
+
+console.log(getFirstAnagram('asd'));
+console.log(getFirstAnagram('link'));
+console.log(getFirstAnagram('link1'));
+
+
+function getDataFromSecurityNumber(arr, floor) {
+    for (let i = 0; i < floor; i++) {
+        arr = arr.filter(qqq =>{ return typeof (qqq) !== 'number'})
+        arr = arr.flat();
+    }
+
+    return arr.filter(qqq =>{ return typeof (qqq) === 'number'});
+}
+
+const ar = [1, 2, 3, [4, 5],
+    [6, [7]],
+    [8, 9]
+];
+
+console.log(getDataFromSecurityNumber(ar, 0));
+console.log(getDataFromSecurityNumber(ar, 1));
+console.log(getDataFromSecurityNumber(ar, 2));
+console.log(getDataFromSecurityNumber(ar, 3));
+
+const myReduce = () => {
+    
+}
