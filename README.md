@@ -1,44 +1,89 @@
-# Test Site
+# Main app name
 
-Testing and Exercises
+app description
 
+### Written with:
 
-### There are 8 basic data types in JavaScript.
+- HTML
+- CSS
+- Python 3.9
+- Django 3.0.2
+- SQLite 3
+- django-markdown2
+### Readme Navigation
 
-* **number** for numbers of any kind: integer or floating-point, integers are limited by **±(253-1)**.
-* **bigint** is for integer numbers of arbitrary length.
-string for strings. A string may have zero or more characters, there’s no separate single-character type.
-* **boolean** for **true**/**false**.
-* **null** for unknown values – a standalone type that has a single value **null**.
-* **undefined** for unassigned values – a standalone type that has a single value **undefined**.
-* **object** for more complex data structures.
-* **symbol** for unique identifiers.
+1. [Name](#1-header)
+   - [subname](#11-subheader)
+   - [subname](#12-subheader)
+   - [subname](#13-subheader)
+2. [Name](#2-header)
+   - [subname](#21-subheader)
+   - [subname](#22-subheader)
+3. [Name](#3-header)
+4. [Name](#4-header)
+5. [Name](#5-header)
+6. [Future improvements](#6-future-improvements)
 
-The **typeof** operator allows us to see which type is stored in a variable.
+[My contacts](#my-contacts)
 
-* Two forms: **typeof x** or **typeof(x)**.
-* Returns a string with the name of the type, like **"string"**.
-* For **null** returns **"object"** = this is an error in the language, it's not actually an object 
+## 1. Header:
 
-### Simplest user interactors
+### 1.1 Subheader:
 
-**alert**\
-shows a message.
+image description
 
-**prompt**\
-shows a message asking the user to input text. It returns the text or, if Cancel button or Esc is clicked, **null**.
+![alt text](/readmedia/default.png)
 
-**confirm**\
-shows a message and waits for the user to press “OK” or “Cancel”. It returns **true** for OK and **false** for Cancel/Esc.
+### 1.2 Subheader:
 
-All these methods are modal: they pause script execution and don’t allow the visitor to interact with the rest of the page until the window has been dismissed.
+image description
 
-There are two limitations shared by all the methods above:
+![alt text](/readmedia/default.png)
 
-1. The exact location of the modal window is determined by the browser. Usually, it’s in the center.
-2. The exact look of the window also depends on the browser. We can’t modify it.
+### 1.3 Subheader:
 
-That is the price for simplicity. There are other ways to show nicer windows and richer interaction with the visitor, but if “bells and whistles” do not matter much, these methods work just fine.
+image description
+
+![alt text](/readmedia/default.png)
+
+## 2. Header:
+
+### 2.1 Subheader:
+
+image description
+
+![alt text](/readmedia/default.png)
+
+### 2.2 Subheader:
+
+image description
+
+![alt text](/readmedia/default.png)
+
+## 3. Header:
+
+image description
+
+![alt text](/readmedia/default.png)
+
+## 4. Header:
+
+image description
+
+![alt text](/readmedia/default.png)
+
+## 5. Header:
+
+image description
+
+![alt text](/readmedia/default.png)
+
+## 6. Future improvements:
+
+1. Feature 1
+2. Feature 2
+3. Feature 3
+
 ## My contacts
 
 [Telegram](https://t.me/vincvader)
