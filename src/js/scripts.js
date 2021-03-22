@@ -1,9 +1,21 @@
 'use strict';
 
-const calculatorButton = document.querySelector('.calculator-button');
-const calculatorConstructorButton =
-    document.querySelector('.calculator-constructor-button');
-const accumulatorButton = document.querySelector('.accumulator-button');
+const btnCalc = document.querySelector('.button-calculator');
+const btnExtCalc = document.querySelector('.button-extended-calculator');
+
+const btnCalcConstructor =
+    document.querySelector('.button-calculator-constructor');
+
+const btnAccum = document.querySelector('.button-accumulator');
+const btnSum = document.querySelector('.button-sum');
+const btnMaxSubSum = document.querySelector('.button-max-sub-sum');
+const btnCamelize = document.querySelector('.button-camelize');
+const btnFilterRange = document.querySelector('.button-filter-range');
+const btnCopySorted = document.querySelector('.button-copy-sorted');
+const btnArrShuffle = document.querySelector('.button-array-shuffle');
+
+const btnFilterRangeInPlace =
+    document.querySelector('.button-filter-range-in-place');
 
 // empty string + empty string = empty string
 console.log([] + []); // =>
@@ -16,7 +28,7 @@ console.log([] + []); // =>
 const evenNumbersTo = (num) => {
     for (let i = 1; i <= num; i++) {
         if (i % 2 === 0) {
-            console.log(i);
+            return i;
         }
     }
 };
@@ -34,7 +46,7 @@ const primeNumbersTo = (num) => {
         for (let j = 2; j < i; j++) {
             if (i % j == 0) continue nextPrime;
         }
-        console.log(i);
+        return i;
     }
 };
 
@@ -113,7 +125,7 @@ const calculator = {
     },
 };
 
-calculatorButton.addEventListener('click', () => {
+btnCalc.addEventListener('click', () => {
     calculator.read();
     alert(calculator.sum());
     alert(calculator.mul());
@@ -175,11 +187,11 @@ function Calculator() {
 const newCalculator = new Calculator();
 
 
-calculatorConstructorButton.addEventListener('click', () => {
+btnCalcConstructor.addEventListener('click', () => {
     newCalculator.read();
 
-    alert( 'Sum=' + newCalculator.sum() );
-    alert( 'Mul=' + newCalculator.mul() );
+    alert('Sum=' + newCalculator.sum());
+    alert('Mul=' + newCalculator.mul());
 });
 
 /**
@@ -187,7 +199,7 @@ calculatorConstructorButton.addEventListener('click', () => {
  * adds up values
  * @param {number} startingValue - starting value?
  */
-function Accumulator(startingValue=0) {
+function Accumulator(startingValue = 0) {
     /**
      * @param {number} value - sets startingValue to inner variable
      */
@@ -204,10 +216,268 @@ function Accumulator(startingValue=0) {
 
 const accumulator = new Accumulator; // initial value 1
 
-accumulatorButton.addEventListener('click', () => {
+btnAccum.addEventListener('click', () => {
     accumulator.read(); // adds the user-entered value
     accumulator.read(); // adds the user-entered value
 
     alert(accumulator.value); // shows the sum of these values
 });
 
+const randomFloatFunciton = (min, max) => {
+    return Math.random() * (max - min) + min;
+};
+const randomIntegerFunciton = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+console.log(randomIntegerFunciton(1, 5));
+console.log(randomFloatFunciton(1, 5));
+
+const upperCaseFirst = (str) => {
+    return str[0].toUpperCase() + str.slice(1);
+};
+
+console.log(upperCaseFirst('john') == `John`);
+
+const checkSpam = (str) => {
+    str = str.toLowerCase();
+    return str.includes('xxx') || str.includes('viagra');
+};
+
+console.log(checkSpam('buy ViAgRA now'));
+console.log(checkSpam('free xxxxx'));
+console.log(checkSpam(`innocent rabbit`));
+
+const truncate = (str, maxLength) => {
+    if (str.length > maxLength) {
+        str = str.slice(0, maxLength - 1) + '...';
+    }
+
+    return str;
+};
+
+console.log(truncate(`What I'd like to tell on this topic is:`, 20));
+console.log(truncate(`Hi everyone!`, 20));
+
+const arrayMiddleValue = (arr) => {
+    return Math.floor(arr.length / 2);
+};
+
+const styles = ['Jazz', 'Blues'];
+
+styles.push('Rock And Roll');
+styles[arrayMiddleValue(styles)] = 'Classics';
+styles.shift();
+styles.unshift('Rap', 'Reggae');
+
+console.log(styles);
+
+
+const sumInput = () => {
+    const sumArray = [];
+    let promptValue = prompt('Enter new value:', 0);
+
+    while (isFinite(promptValue) &&
+            promptValue !== null && promptValue !== '') {
+        sumArray.push(promptValue);
+        promptValue = prompt('Enter new value:', 0);
+    }
+    return sumArray;
+};
+
+btnSum.addEventListener('click', ()=>{
+    const sumArr = sumInput();
+    setTimeout(console.log(sumArr), 0);
+});
+
+const getMaxSubSum = (arr) => {
+    let minSum = 0;
+    let maxSum = 0;
+
+    for (const item of arr) {
+        minSum += item;
+        maxSum = Math.max(minSum, maxSum);
+        if (minSum<0) minSum = 0;
+    }
+    console.log(maxSum);
+};
+
+btnMaxSubSum.addEventListener('click', getMaxSubSum);
+
+const camelize = (str) => {
+    const camelized = str
+        .split('-')
+        .map((word, index)=> index===0 ? word :
+            word[0].toUpperCase() + word.slice(1))
+        .join('');
+    return camelized;
+};
+
+btnCamelize.addEventListener('click', ()=>{
+    console.log(camelize('background-color'));
+    console.log(camelize('list-style-image'));
+    console.log(camelize('-webkit-transition'));
+});
+
+const filterRange = (arr, a, b) => {
+    const filtered = arr.filter((item)=>{
+        return item >= a && item <=b;
+    });
+
+    return filtered;
+};
+
+
+const filterRangeArray = [5, 3, 8, 1];
+
+btnFilterRange.addEventListener('click', ()=>{
+    const filtered = filterRange(filterRangeArray, 1, 4);
+    console.log( filtered ); // 3,1 (matching values)
+
+    console.log( filterRangeArray ); // 5,3,8,1 (not modified)
+});
+
+const filterRangeInPlace = (arr, a, b) => {
+    arr.map((item, index)=>{
+        if (item >= b || item <= a) arr.splice(index, 1);
+    });
+};
+
+const filterRangeInPlaceArray = [5, 3, 8, 1];
+
+btnFilterRangeInPlace.addEventListener('click', ()=>{
+    filterRangeInPlace(filterRangeInPlaceArray, 1, 4);
+    console.log(filterRangeInPlaceArray);
+});
+
+const copySorted = (arr) => {
+    const newArr = arr.slice();
+    return newArr.sort();
+};
+
+const copySortedArray = ['HTML', 'JavaScript', 'CSS'];
+
+btnCopySorted.addEventListener('click', () => {
+    const sorted = copySorted(copySortedArray);
+
+    console.log( sorted ); // CSS, HTML, JavaScript
+    console.log( copySortedArray ); // HTML, JavaScript, CSS (no changes)
+});
+
+/**
+ * ExtendedCalculator constructor
+ * takes a string like "1 + 2" in the format “NUMBER operator NUMBER”
+ * and returns the result.
+ */
+function ExtendedCalculator() {
+    this.methods = {
+        '+': (a, b) => a+b,
+        '-': (a, b) => a-b,
+    },
+
+    this.calculate = function() {
+        const str = prompt(`Calculate:
+            '{number} {operator} {number}'`, '1 + 2') || '1 + 2';
+        const split = str.split(' ');
+        const a = +split[0];
+        const operator = split[1];
+        const b = +split[2];
+
+        return this.methods[operator](a, b);
+    },
+
+    this.addMethod = function(operator, func) {
+        return this.methods[operator] = func;
+    };
+}
+
+const powerCalc = new ExtendedCalculator();
+
+powerCalc.addMethod('*', (a, b) => a * b);
+powerCalc.addMethod('/', (a, b) => a / b);
+powerCalc.addMethod('**', (a, b) => a ** b);
+
+btnExtCalc.addEventListener('click', ()=>{
+    const calc = powerCalc.calculate();
+    setTimeout(console.log(calc), 0);
+});
+
+const john = { name: 'John', age: 25 };
+const pete = { name: 'Pete', age: 30 };
+const mary = { name: 'Mary', age: 28 };
+
+const users = [john, pete, mary];
+
+const names = users.map((user)=>user.name);
+
+console.log( names ); // John, Pete, Mary
+
+const johnEx = { name: 'John', surname: 'Smith', id: 1 };
+const peteEx = { name: 'Pete', surname: 'Hunt', id: 2 };
+const maryEx = { name: 'Mary', surname: 'Key', id: 3 };
+
+const usersEx = [johnEx, peteEx, maryEx];
+
+const usersMapped = usersEx.map((user)=>({
+    fullName: `${user.name} ${user.surname}`,
+    id: user.id,
+}));
+
+console.log( usersMapped[0].fullName, usersMapped[0].id ); // John Smith 1
+
+const johnAg = { name: 'John', age: 25 };
+const peteAg = { name: 'Pete', age: 30 };
+const maryAg = { name: 'Mary', age: 28 };
+
+const arrAg = [johnAg, peteAg, maryAg];
+
+const sortByAge = (arr) => {
+    return arr.sort((a, b)=>a.age - b.age);
+};
+
+sortByAge(arrAg);
+
+// now: [john, mary, pete]
+console.log(arrAg[0].name); // John
+console.log(arrAg[1].name); // Mary
+console.log(arrAg[2].name); // Pete
+
+const arrShuffle = [1, 2, 3, 4];
+
+// Fisher–Yates Shuffle
+const shuffle = (arr) => {
+    const newArr = arr.slice();
+    let m = newArr.length;
+    let t;
+    let i;
+    // While there remain elements to shuffle…
+    while (m) {
+        // Pick a remaining element…
+        i = Math.floor(Math.random() * m--);
+
+        // And swap it with the current element.
+        t = newArr[m];
+        newArr[m] = newArr[i];
+        newArr[i] = t;
+    }
+    return newArr;
+};
+
+btnArrShuffle.addEventListener('click', () => shuffle(arrShuffle));
+
+let n1 = 0;
+let n2 = 0;
+let n3 = 0;
+let n4 = 0;
+
+const flex = () => {
+    for (let i = 0; i < 10000; i++) {
+        const num = shuffle(arrShuffle);
+        num[0] === 1? n1++: num[0] === 2 ? n2++: num[0] === 3 ? n3++: n4++;
+        num[1] === 1? n1++: num[1] === 2 ? n2++: num[1] === 3 ? n3++: n4++;
+        num[2] === 1? n1++: num[2] === 2 ? n2++: num[2] === 3 ? n3++: n4++;
+    }
+    return [n1, n2, n3, n4];
+};
+
+console.log(flex());
