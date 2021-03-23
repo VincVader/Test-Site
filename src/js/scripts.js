@@ -1,6 +1,7 @@
 'use strict';
 
 const btnCalc = document.querySelector('.button-calculator');
+const btnMain = document.querySelector('.button-main');
 const btnExtCalc = document.querySelector('.button-extended-calculator');
 
 const btnCalcConstructor =
@@ -18,7 +19,6 @@ const btnFilterRangeInPlace =
     document.querySelector('.button-filter-range-in-place');
 
 // empty string + empty string = empty string
-console.log([] + []); // =>
 
 // template strings next to a function considered
 // as an argument passed to that function
@@ -34,12 +34,6 @@ const evenNumbersTo = (num) => {
 };
 
 evenNumbersTo(12);
-console.log('!!!!!!!!!!');
-// let i = 0;
-// while (i < 3) {
-//     alert( `number ${i}!` );
-//     i++
-// }
 
 const primeNumbersTo = (num) => {
     nextPrime: for (let i = 2; i <= num; i++) {
@@ -67,10 +61,8 @@ const isEmpty = (obj) => {
     return Object.keys(obj).length !== 0;
 };
 
-const emptyObject = {};
 
 console.log(isEmpty(newObject));
-console.log(isEmpty(emptyObject));
 
 const salaries = {
     John: 100,
@@ -244,8 +236,6 @@ const checkSpam = (str) => {
     return str.includes('xxx') || str.includes('viagra');
 };
 
-console.log(checkSpam('buy ViAgRA now'));
-console.log(checkSpam('free xxxxx'));
 console.log(checkSpam(`innocent rabbit`));
 
 const truncate = (str, maxLength) => {
@@ -256,7 +246,6 @@ const truncate = (str, maxLength) => {
     return str;
 };
 
-console.log(truncate(`What I'd like to tell on this topic is:`, 20));
 console.log(truncate(`Hi everyone!`, 20));
 
 const arrayMiddleValue = (arr) => {
@@ -333,8 +322,6 @@ const filterRangeArray = [5, 3, 8, 1];
 btnFilterRange.addEventListener('click', ()=>{
     const filtered = filterRange(filterRangeArray, 1, 4);
     console.log( filtered ); // 3,1 (matching values)
-
-    console.log( filterRangeArray ); // 5,3,8,1 (not modified)
 });
 
 const filterRangeInPlace = (arr, a, b) => {
@@ -437,11 +424,6 @@ const sortByAge = (arr) => {
 
 sortByAge(arrAg);
 
-// now: [john, mary, pete]
-console.log(arrAg[0].name); // John
-console.log(arrAg[1].name); // Mary
-console.log(arrAg[2].name); // Pete
-
 const arrShuffle = [1, 2, 3, 4];
 
 // Fisher–Yates Shuffle
@@ -463,6 +445,18 @@ const shuffle = (arr) => {
     return newArr;
 };
 
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
+
+const newShuffle = shuffleArray(arrShuffle);
+
+console.log(newShuffle);
+
 btnArrShuffle.addEventListener('click', () => shuffle(arrShuffle));
 
 let n1 = 0;
@@ -470,7 +464,7 @@ let n2 = 0;
 let n3 = 0;
 let n4 = 0;
 
-const flex = () => {
+const testing = () => {
     for (let i = 0; i < 10000; i++) {
         const num = shuffle(arrShuffle);
         num[0] === 1? n1++: num[0] === 2 ? n2++: num[0] === 3 ? n3++: n4++;
@@ -480,4 +474,96 @@ const flex = () => {
     return [n1, n2, n3, n4];
 };
 
-console.log(flex());
+console.log(testing());
+
+const getAverageAge = (arr) => {
+    const newArr = arr.slice();
+
+    let totalAge = 0;
+    newArr.map((user) => {
+        totalAge += user.age;
+    });
+    return Math.round(totalAge / newArr.length);
+};
+
+console.log(getAverageAge(arrAg));
+
+const unique = (arr) => {
+    const newArr = [];
+
+    for (const item of arr) {
+        if (!newArr.includes(item)) newArr.push(item);
+    }
+
+    return newArr;
+};
+
+const strings = ['Hare', 'Krishna', 'Hare', 'Krishna',
+    'Krishna', 'Krishna', 'Hare', 'Hare', ':-O',
+];
+
+console.log( unique(strings) ); // Hare, Krishna, :-O
+
+const usersTest = [
+    { id: 'john', name: 'John Smith', age: 20 },
+    { id: 'ann', name: 'Ann Smith', age: 24 },
+    { id: 'pete', name: 'Pete Peterson', age: 31 },
+];
+
+const groupById = (arr) => {
+    const obj = {};
+    for (const item of arr) {
+        obj[item.id] = item;
+    }
+    return obj;
+};
+
+console.log(groupById(usersTest));
+
+const solveDominus = (arr) => {
+    const arrCopy = arr.slice().reverse();
+
+    const newArr = [];
+    let dominus = -Infinity;
+
+    arrCopy.map((item)=>{
+        if (item>dominus) {
+            dominus = item;
+            newArr.unshift(item);
+        }
+    });
+    return newArr;
+};
+
+const intersect = (arr) => {
+    if (arr.length === 0) return [];
+
+    const t = arr.map((el)=>el.split('-').map(Number))
+        .sort((a, b)=> (a[0]-b[0]));
+    const temp = t.slice(0, 1);
+    t.slice(1).forEach((el)=> {
+        const last = temp[temp.length-1];
+        if (last[1] >= el[0]) {
+            if (last[1] <= el[1]) {
+                last[1] = el[1];
+            }
+        } else {
+            temp.push(el);
+        }
+    });
+    return temp;
+};
+
+btnMain.addEventListener('click', () => {
+    console.log(intersect(['1-3', '4-7']));
+    console.log(solveDominus([3, 5, 123, 53]));
+});
+
+// function unique(arr) {
+//     /* your code */
+//   }
+
+//   let values = ["Hare", "Krishna", "Hare", "Krishna",
+//     "Krishna", "Krishna", "Hare", "Hare", ":-O"
+//   ];
+//   alert( unique(values) ); // Hare, Krishna, :-O
