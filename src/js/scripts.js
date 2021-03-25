@@ -559,11 +559,59 @@ btnMain.addEventListener('click', () => {
     console.log(solveDominus([3, 5, 123, 53]));
 });
 
-// function unique(arr) {
-//     /* your code */
-//   }
+const arrAnagram =
+    ['nap', 'teachers', 'cheaters', 'PAN', 'ear', 'era', 'hectares'];
 
-//   let values = ["Hare", "Krishna", "Hare", "Krishna",
-//     "Krishna", "Krishna", "Hare", "Hare", ":-O"
-//   ];
-//   alert( unique(values) ); // Hare, Krishna, :-O
+const acleanM = (arr) => {
+    const map = new Map();
+
+    for (const word of arr) {
+        const sorted = word.toLowerCase().split('').sort().join('');
+        if (!map.has(sorted)) map.set(sorted, word);
+    }
+    return [...map.values()];
+};
+
+const acleanO = (arr) => {
+    const newArr = arr.slice();
+    const map = {};
+
+    for (const word of newArr) {
+        const sorted = word.toLowerCase().split('').sort().join('');
+        if (!Object.prototype.hasOwnProperty.call(map, word)) {
+            map[sorted] = word;
+        }
+    }
+    return Object.values(map);
+};
+
+console.log( acleanO(arrAnagram) ); // "nap,teachers,ear" or "PAN,cheaters,era"
+console.log( acleanM(arrAnagram) ); // "nap,teachers,ear" or "PAN,cheaters,era"
+
+const user = { name: 'John', years: 30 };
+
+// your code to the left side:
+const { name, years: age, isAdmin = true } = user;
+
+console.log( name, age, isAdmin ); // John 30 False
+
+
+const salaries123 = {
+    'John': 100,
+    'Pete': 300,
+    'Mary': 250,
+};
+
+const topSalary = (salaries) => {
+    if (Object.values(salaries).length === 0) return null;
+
+    let maxName = '';
+    let maxSalary = 0;
+
+    for (const [name, salary] of Object.entries(salaries)) {
+        if (salary > maxSalary) maxSalary = salary, maxName = name;
+    }
+    return maxName;
+};
+
+console.log(topSalary({}), topSalary(salaries123)); // null "Pete"
