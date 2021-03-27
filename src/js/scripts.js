@@ -614,4 +614,67 @@ const topSalary = (salaries) => {
     return maxName;
 };
 
-console.log(topSalary({}), topSalary(salaries123)); // null "Pete"
+console.log(topSalary(salaries123));
+
+const sumToLoop = (n) => {
+    let sum = 0;
+    for (let i = 0; i <= n; i++) {
+        sum += i;
+    }
+    return sum;
+};
+const sumToRecursion = (n) => {
+    return n == 1 ? 1: n + sumToRecursion(n - 1);
+};
+
+const sumToProgression = (n) => {
+    return n * (n + 1)/2;
+};
+
+console.log(sumToLoop(10000), sumToRecursion(10000), sumToProgression(10000));
+
+const factorial = (n) => {
+    return n === 1 ? 1: n * factorial(n-1);
+};
+
+console.log(factorial(5));
+
+const fibonacci = (n) => {
+    let first = 1;
+    let second = 1;
+    let temp = 1;
+
+    for (let i = 3; i <= n; i++) {
+        temp = second;
+        second += first;
+        first = temp;
+    }
+    return second;
+};
+
+console.log(fibonacci(77));
+
+const list = {
+    value: 1,
+    next: {
+        value: 2,
+        next: {
+            value: 3,
+            next: {
+                value: 4,
+                next: null,
+            },
+        },
+    },
+};
+
+const printList = (list) => {
+    let temp = list;
+
+    while (temp) {
+        console.log(temp.value);
+        temp = temp.next;
+    }
+};
+
+console.log(printList(list));
