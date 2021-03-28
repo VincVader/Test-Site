@@ -654,27 +654,22 @@ const fibonacci = (n) => {
 
 console.log(fibonacci(77));
 
-const list = {
-    value: 1,
-    next: {
-        value: 2,
-        next: {
-            value: 3,
-            next: {
-                value: 4,
-                next: null,
-            },
-        },
-    },
+
+/* .. your code for inBetween and inArray */
+const arr = [1, 2, 3, 4, 5, 6, 7];
+
+const inBetween = (min, max) => {
+    return function(x) {
+        return x >= min && x <= max;
+    };
 };
 
-const printList = (list) => {
-    let temp = list;
-
-    while (temp) {
-        console.log(temp.value);
-        temp = temp.next;
-    }
+const inArray = (arr) => {
+    return function(a) {
+        return arr.includes(a);
+    };
 };
 
-console.log(printList(list));
+console.log( arr.filter(inBetween(3, 6)) ); // 3,4,5,6
+console.log( arr.filter(inArray([1, 2, 10])) ); // 1,2
+
