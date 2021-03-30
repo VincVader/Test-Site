@@ -24,3 +24,33 @@
         transition: .4s;
     }
 }
+
+.clock {
+    text-align: center;
+
+    &-time {
+        font-size: 40px;
+    }
+
+    &-btn {
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+
+        & + & {
+            margin-left: 10px;
+        }
+    }
+
+    .btn-start {
+        background: rgb(25, 214, 25);
+    }
+
+    .btn-pause {
+        background: yellow;
+    }
+
+    .btn-reset {
+        background: red;
+    }
+}

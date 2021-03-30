@@ -1,5 +1,16 @@
 'use strict';
 
+const t1 = performance.now();
+
+// STOPWATCH
+
+const timer = document.querySelector('.timer');
+const startBtn = document.querySelector('.btn-start');
+const pauseBtn = document.querySelector('.btn-pause');
+const resetBtn = document.querySelector('.btn-reset');
+
+// /STOPWATCH
+
 const btnCalc = document.querySelector('.button-calculator');
 const btnMain = document.querySelector('.button-main');
 const btnExtCalc = document.querySelector('.button-extended-calculator');
@@ -588,10 +599,10 @@ const acleanO = (arr) => {
 console.log( acleanO(arrAnagram) ); // "nap,teachers,ear" or "PAN,cheaters,era"
 console.log( acleanM(arrAnagram) ); // "nap,teachers,ear" or "PAN,cheaters,era"
 
-const user = { name: 'John', years: 30 };
+const user123 = { name: 'John', years: 30 };
 
 // your code to the left side:
-const { name, years: age, isAdmin = true } = user;
+const { name, years: age, isAdmin = true } = user123;
 
 console.log( name, age, isAdmin ); // John 30 False
 
@@ -670,6 +681,274 @@ const inArray = (arr) => {
     };
 };
 
-console.log( arr.filter(inBetween(3, 6)) ); // 3,4,5,6
-console.log( arr.filter(inArray([1, 2, 10])) ); // 1,2
+console.log( arr.filter(inBetween(3, 6)), // 3,4,5,6
+    arr.filter(inArray([1, 2, 10]))); // 1,2
 
+const makeCounter = () => {
+    let count = 0;
+    const counter = () => {
+        return count++;
+    };
+
+    counter.decrease = () => count--;
+    counter.set = (value) => {
+        return count = value;
+    };
+    return counter;
+};
+
+const counter = makeCounter();
+
+console.log( counter() ); // 0
+
+const sum = (a) => {
+    let currentSum = a;
+
+    const f = (b) => {
+        currentSum += b;
+        return f;
+    };
+
+    f.toString = function() {
+        return currentSum;
+    };
+
+    return f;
+};
+
+console.log( sum(0)(1)(2)(3)(4)(5) ); // 15
+
+const halvingSum = (n) => {
+    return n === 1 ? n: n + halvingSum(Math.floor(n/2));
+};
+
+console.log(halvingSum(25)); // 47
+
+/*
+
+Мы детективы и нам предстоит взломать сейф. Сейф цифровой:
+
+ ┌───┬───┬───┐
+ │ 1 │ 2 │ 3 │
+ ├───┼───┼───┤
+ │ 4 │ 5 │ 6 │
+ ├───┼───┼───┤
+ │ 7 │ 8 │ 9 │
+ └───┼───┼───┘
+     │ 0 │
+     └───┘
+
+У нас есть свидетель, человек, который видел как этот сейф открывают. Этот
+свидетель знает какие примерно цифры были нажаты, нужно реализовать функцию
+getPINs, которая принимает строку с примерным набором цифр, которые видел
+свидетель, а возвращает набор возможных PIN-кодов к сейфу в виде массива строк.
+Свидетель знает в какой области была нажата кнопка, но точно не может сказать
+какая. Однако свидетель уверен что его максимальная ошибка составляет одну цифру
+в сторону (вверх, вниз, вправо или влево). То есть если свидетель говорит что
+была нажата 2, значит могла быть нажата любая клавиша из `[1, 2, 3, 5]`.
+*/
+
+const variants = [
+    ['8', '0'], // 0
+    ['1', '2', '4'], // 1
+    ['1', '2', '3', '5'], // 2
+    ['2', '3', '6'], // 3
+    ['1', '4', '5', '7'], // 4
+    ['2', '4', '5', '6', '8'], // 5
+    ['3', '5', '6', '9'], // 6
+    ['4', '7', '8'], // 7
+    ['5', '7', '8', '9', '0'], // 8
+    ['6', '8', '9'], // 9
+];
+const getPINs = (observed) => {
+    const arrObserved = observed.split('');
+
+    if (arrObserved.length === 1) return variants[+arrObserved[0]];
+    const nums = variants[arrObserved[0]];
+    const nextVariants = getPINs(observed.slice(1));
+
+    const combination = [];
+
+    for (let i = 0; i < nums.length; i++) {
+        for (let j = 0; j < nextVariants.length; j++) {
+            const num = nums[i] + nextVariants[j];
+            combination.push(num);
+        }
+    }
+    return combination;
+};
+// ["5", "7", "8", "9", "0"]
+console.log(getPINs('8'));
+// ["11", "22", "44", "12", "21", "14", "41", "24", "42"]
+console.log(getPINs('11'));
+
+const objCreator = (arr) => {
+    if (arr.length === 0) return {};
+    const created = {};
+    created[arr[0]] = objCreator(arr.slice(1));
+
+    return created;
+};
+
+console.log(objCreator(['a', 'b', 'c'])); // {a:{b:{c:{}}}}
+console.log(objCreator(['a', 'b', 'c', 'd'])); // {a:{b:{c:{d:{}}}}}
+console.log(objCreator([])); // {}
+
+/*
+Прислал Геворг.
+
+Необходимо реализовать функцию accum, которая принимает строку, а возвращает
+другую строку, как показано в примерах.
+
+аккумулятор ("abcd") -> "A-Bb-Ccc-Dddd"
+аккумулятор ("RqaEzty") -> "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+аккумулятор ("cwAt") -> "C-Ww-Aaa-Tttt"
+Параметр аккумулятора - это строка, которая включает только буквы от a..z и A..Z
+*/
+
+const accum = (str) => {
+    str = str.toLowerCase();
+    const arrStr = str.split('');
+    let answer = '';
+    arrStr.map((letter, index) => {
+        answer += letter.toUpperCase() + letter.repeat(index) + '-';
+    });
+    return answer.slice(0, -1);
+};
+
+console.log(accum('abcd')); // "A-Bb-Ccc-Dddd"
+console.log(accum('RqaEzty')); // "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+console.log(accum('cwAt')); // "C-Ww-Aaa-Tttt"
+
+
+const solution = (params) => {
+    let answer = [];
+    if (params.length === 0) return answer.slice(0, -1);
+    if (params.length < 2) return params + '_';
+    answer.push(params.slice(0, 2));
+    answer.push(solution(params.slice(2)));
+    answer = answer.flat();
+    return answer;
+};
+
+console.log(solution('abc'));
+console.log(solution('abcdef'));
+
+const debounce = (f, ms) => {
+    let timeout = null;
+    return function() {
+        const callNow = !timeout;
+        /* eslint-disable */
+        const next = () => f.apply(this, arguments);
+        /* eslint-enable */
+        clearTimeout(timeout);
+        timeout = setTimeout(next, ms);
+
+        if (callNow) {
+            next();
+        }
+    };
+};
+
+debounce(console.log, 1000);
+
+const getDigitSum = (num) => {
+    const str = String(num).split('');
+    if (str.length < 2) return +str;
+    let sum = 0;
+    for (const digit of str) {
+        sum += +digit;
+    }
+    return getDigitSum(sum);
+};
+
+console.log(getDigitSum(5));
+console.log(getDigitSum(57));
+console.log(getDigitSum(87653));
+
+const killer = (suspectInfo, dead) => {
+    for (const [suspect, seen] of Object.entries(suspectInfo)) {
+        const check = dead.every((item) => seen.includes(item));
+        if (check) return suspect;
+    }
+};
+
+console.log(killer({
+    'James': ['Jacob', 'Bill', 'Lucas'],
+    'Johnny': ['David', 'Kyle', 'Lucas'],
+    'Peter': ['Lucy', 'Kyle'],
+}, ['Lucas', 'Bill'])); // 'James'
+
+console.log(killer({
+    'Brad': [],
+    'Megan': ['Ben', 'Kevin'],
+    'Finn': [],
+}, ['Ben'])); // 'Megan'
+
+const getPrize = (guessScore, realScore) => {
+    if (guessScore === realScore) return 2;
+    const guess = guessScore.split(':');
+    const guessWinner = guess[0] >= guess[1];
+    const real = realScore.split(':');
+    if (guess[0] == guess[1] && real[0] == real[1]) return 1;
+    if (guess[0] != guess[1] && real[0] == real[1] ||
+        guess[0] == guess[1] && real[0] != real[1]) return 0;
+    const realWinner = real[0] >= real[1];
+
+    return guessWinner === realWinner ? 1 : 0;
+};
+
+console.log(getPrize('1:2', '1:2')); // 2
+console.log(getPrize('2:1', '5:0')); // 1
+console.log(getPrize('3:0', '2:2')); // 0
+console.log(getPrize('0:0', '3:3')); // 1
+console.log(getPrize('2:3', '3:3')); // 0
+console.log(getPrize('3:3', '2:3')); // 0
+console.log(getPrize('3:3', '33:33')); // 1
+
+
+const t2 = performance.now();
+
+console.log(`${(t2 - t1).toFixed(0)} ms`);
+
+
+let stopWatch = null;
+let pausedTime = 0;
+let countingTime = 0;
+let reset = false;
+let start = Date.now();
+
+console.log(countingTime);
+startBtn.addEventListener('click', () => {
+    if (stopWatch) clearInterval(stopWatch);
+    if (countingTime || reset) {
+        start = Date.now();
+    }
+    stopWatch = setInterval(() => {
+        countingTime = (reset) ? 0 : Date.now() - start + pausedTime;
+        const milliseconds = Math.floor((countingTime % (1000)) / 10);
+        let seconds = Math.floor((countingTime % (1000 * 60)) / 1000);
+        if (seconds< 10) seconds = '0' + seconds;
+        let minutes = Math
+            .floor((countingTime % (1000 * 60 * 60)) / (1000 * 60));
+        if (minutes< 10) minutes = '0' + minutes;
+        let hours = Math
+            .floor((countingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        if (hours< 10) hours = '0' + hours;
+
+        timer.innerHTML = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+        if (reset) reset = false;
+    }, 0);
+});
+pauseBtn.addEventListener('click', () => {
+    clearInterval(stopWatch);
+    if (!reset) pausedTime = countingTime;
+    console.log(countingTime);
+});
+
+resetBtn.addEventListener('click', () => {
+    timer.innerHTML = '00:00:00.000';
+    reset = true;
+    pausedTime = 0;
+    clearInterval(stopWatch);
+});
